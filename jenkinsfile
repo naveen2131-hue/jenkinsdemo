@@ -6,8 +6,8 @@ pipeline {
         kind: Pod
         spec:
           containers:
-          - name: 'jnlp'
-            image: 'naveen2131/my-app:latest
+          - name: 'naveen2131'
+            image: 'naveen2131/my-app:latest'
             command:
             - cat
             tty: true
