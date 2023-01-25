@@ -6,7 +6,7 @@ pipeline {
         kind: Pod
         spec:
           containers:
-          - name: owsap
+          - name: owasp
             image: owasp/dependency-check:8.0.1
             command: 
             - cat
