@@ -6,8 +6,8 @@ pipeline {
         kind: Pod
         spec:
           containers:
-          - name: maven
-            image: maven:alpine
+          - name: 'jnlp'
+            image: 'jenkins/inbound-agent:latest'
             command:
             - cat
             tty: true
