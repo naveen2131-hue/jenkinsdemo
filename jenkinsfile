@@ -43,7 +43,8 @@ pipeline {
     stage('owasp') {
       steps { 
         container('owasp') {
-          sh 'dependency-check.sh -project "test" --scan "/home/jenkins/agent/workspace/first_jenkins_job/target"'
+          sh './bin/dependency-check.sh -h'
+          sh './bin/dependency-check.sh --out . --scan /home/jenkins/agent/workspace/first_jenkins_job/target/'
         }
       }
     }
