@@ -43,7 +43,7 @@ pipeline {
     stage('owasp') {
       steps { 
         container('owasp') {
-          sh '--scan /home/jenkins/agent/workspace/first_jenkins_job/target/ --format "ALL" --project test'
+           dependencyCheck additionalArguments: --format "ALL" --project test
         }
       }
     }
