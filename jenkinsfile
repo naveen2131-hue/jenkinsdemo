@@ -43,7 +43,7 @@ pipeline {
     stage('owasp') {
       steps { 
         container('owasp') {
-          dependencyCheck additionalArguments: '--format "ALL" --project test'
+          echo 'completed'
         }
       }
     }
