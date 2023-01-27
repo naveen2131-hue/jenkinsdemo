@@ -16,8 +16,7 @@ pipeline {
                name: zap1
           volumes:
           - name: zap1
-            hostPath:
-              path: /zap/wrk/
+            emptyDir: {}
           - name: docker
             image: docker:latest
             command:
