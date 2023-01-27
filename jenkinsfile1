@@ -25,8 +25,9 @@ pipeline {
     stage('owasp baseline zap') {
       steps {
         container('docker') {
-          sh 'docker run -v $(pwd):rw -t owasp/zap2docker-stable zap-baseline.py \
-               -t https://stardust-studios-recording-studio.business.site/ -r testreport.html'
+          docker run -v $(pwd):$(pwd):rw -t owasp/zap2docker-stable zap-baseline.py \
+    -t https://stardust-studios-recording-studio.business.site/ -g gen.conf -r testreport.html
+
         }
       }
     } 
