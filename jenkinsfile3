@@ -1,0 +1,49 @@
+pipeline {
+  agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: dastardly
+            image: owasp/dependency-check:8.0.1
+            command: 
+            - cat
+            tty: true
+          - name: maven
+            image: maven:alpine
+            command:
+            - cat
+            tty: true
+          - name: docker
+            image: docker:latest
+            command:
+            - cat
+            tty: true
+            volumeMounts:
+             - mountPath: /var/run/docker.sock
+               name: docker-sock
+          volumes:
+          - name: docker-sock
+            hostPath:
+              path: /var/run/docker.sock    
+       '''
+    }
+  }
+  stages {
+    stage('dast') {
+      steps {
+        container('docker') {
+          cleanWs()
+          sh '''
+             docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
+             -e DASTARDLY_TARGET_URL=https://ginandjuice.shop/ \
+             -e DASTARDLY_OUTPUT_FILE=${WORKSPACE}/dastardly-report.xml \
+             public.ecr.aws/portswigger/dastardly:latest
+          '''
+        }
+      }
+    } 
+  } 
+}    
