@@ -14,10 +14,15 @@ pipeline {
             volumeMounts:
              - mountPath: /var/run/docker.sock
                name: docker-sock
+             - mountPath: /zap/wrk/
+               name: zap
           volumes:
           - name: docker-sock
             hostPath:
-              path: /var/run/docker.sock    
+              path: /var/run/docker.sock  
+          - name: zap
+            hostPath:
+              path: /zap/wrk/  
        '''
     }
   }
@@ -25,8 +30,8 @@ pipeline {
     stage('owasp baseline zap') {
       steps {
         container('docker') {
-          sh 'docker run -v $(pwd):/home/jenkins/agent/workspace/baselinezap_report/:rw -t owasp/zap2docker-stable zap-baseline.py \
-                -t https://stardust-studios-recording-studio.business.site/ -g gen.conf -r testreport.html'
+          sh 'docker run -v $(pwd):zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py \
+                -t https://stardust-studios-recording-studio.business.site/ -r testreport.html'
 
         }
       }
