@@ -6,6 +6,18 @@ pipeline {
         kind: Pod
         spec:
           containers:
+          - name: zap
+            image: owasp/zap2docker-stable
+            command:
+            - cat
+            tty: true
+            volumeMounts:
+             - mountPath: /zap/wrk/
+               name: zap
+          volumes:
+          - name: zap
+            hostPath:
+              path: /zap/wrk/
           - name: docker
             image: docker:latest
             command:
@@ -14,24 +26,19 @@ pipeline {
             volumeMounts:
              - mountPath: /var/run/docker.sock
                name: docker-sock
-             - mountPath: /zap/wrk
-               name: zap
           volumes:
           - name: docker-sock
             hostPath:
               path: /var/run/docker.sock  
-          - name: zap
-            hostPath:
-              path: /zap/wrk
        '''
     }
   }
   stages {
     stage('owasp baseline zap') {
       steps {
-        container('docker') {
-          sh 'docker run -v $(pwd):zap/wrk:rw -t owasp/zap2docker-stable zap-baseline.py \
-                -t https://stardust-studios-recording-studio.business.site/ -r testreport.html'
+        container('zap') {
+          sh 'docker run -v $(pwd):zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py \
+                -t https://stardust-studios-recording-studio.business.site/ -g gen.conf -r testreport.html'
 
         }
       }
