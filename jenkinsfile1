@@ -14,7 +14,7 @@ pipeline {
             volumeMounts:
              - mountPath: /var/run/docker.sock
                name: docker-sock
-             - mountPath: /zap/wrk/
+             - mountPath: /home/jenkins/agent/workspace/baselinezap_report/zap/wrk
                name: zap
           volumes:
           - name: docker-sock
@@ -22,7 +22,7 @@ pipeline {
               path: /var/run/docker.sock  
           - name: zap
             hostPath:
-              path: /zap/wrk/  
+              path: /home/jenkins/agent/workspace/baselinezap_report/zap/wrk
        '''
     }
   }
