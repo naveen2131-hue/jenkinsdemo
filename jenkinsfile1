@@ -11,12 +11,6 @@ pipeline {
             command:
             - cat
             tty: true
-            volumeMounts:
-             - mountPath: /zap/wrk/
-               name: zap1
-          volumes:
-          - name: zap1
-            emptyDir: {}
           - name: docker
             image: docker:latest
             command:
@@ -25,10 +19,14 @@ pipeline {
             volumeMounts:
              - mountPath: /var/run/docker.sock
                name: docker-sock
+             - mountpath: /zap/wrk/
+               name: zapvolume
           volumes:
           - name: docker-sock
             hostPath:
-              path: /var/run/docker.sock  
+              path: /var/run/docker.sock
+          - name: zapvolume
+            emptyDir: {}
        '''
     }
   }
