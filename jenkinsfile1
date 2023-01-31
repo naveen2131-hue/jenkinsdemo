@@ -25,7 +25,7 @@ pipeline {
     stage('owasp baseline zap') {
       steps {
         container('docker') {
-          sh 'docker run -v $(pwd):/zap/wrk/:/root/docker" -p 9999:9999 ubuntu:latest //bin/bash -t owasp/zap2docker-stable zap-baseline.py \
+          sh 'docker run -v $(pwd):/zap/wrk/:[]string -t owasp/zap2docker-stable zap-baseline.py \
                 -t https://stardust-studios-recording-studio.business.site/ -g gen.conf -r testreport.html'
 
         }
