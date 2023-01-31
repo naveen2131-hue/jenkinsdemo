@@ -26,7 +26,7 @@ pipeline {
       steps {
         container('docker') {
           sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable touch /zap/wrk/test.txt'  
-          sh 'docker run -v $(pwd):/zap/wrk/:rw -t ubuntu:20.04 -t https://stardust-studios-recording-studio.business.site/ touch /zap/wrk/report.txt'
+          sh 'docker run -v $(pwd):/zap/wrk/:rw -t ubuntu:20.04 -t https://stardust-studios-recording-studio.business.site/ -r /zap/wrk/test.txt'
         }
       }
     } 
