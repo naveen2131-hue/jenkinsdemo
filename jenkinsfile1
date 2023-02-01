@@ -29,7 +29,7 @@ pipeline {
     stage('owasp baseline zap') {
       steps {
         container('docker') { 
-          sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://stardust-studios-recording-studio.business.site/ touch /zap/wrk/test.txt -r testreport.html'
+          sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://stardust-studios-recording-studio.business.site/ -r testreport.html'
         }
       }
     } 
