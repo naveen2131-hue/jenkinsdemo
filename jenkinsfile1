@@ -14,10 +14,14 @@ pipeline {
             volumeMounts:
              - mountPath: /var/run/docker.sock
                name: docker-sock
+             - mountPath: /zap/wrk
+               name: zapreport
           volumes:
           - name: docker-sock
             hostPath:
               path: /var/run/docker.sock
+          - name: zapreport
+            emptyDir: {}
        '''
     }
   }
