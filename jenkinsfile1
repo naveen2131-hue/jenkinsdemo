@@ -14,15 +14,10 @@ pipeline {
             volumeMounts:
              - mountPath: /var/run/docker.sock
                name: docker-sock
-             - mountPath: /zap/wrk
-               name: zapreport
           volumes:
           - name: docker-sock
             hostPath:
               path: /var/run/docker.sock
-          - name: zapreport
-            persistentVolumeClaim: 
-              claimName: zap-pv-claim
        '''
     }
   }
@@ -30,7 +25,7 @@ pipeline {
     stage('owasp baseline zap') {
       steps {
         container('docker') { 
-          sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t https://stardust-studios-recording-studio.business.site/ -r testreport.html'
+          sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable:2.12.0 zap-baseline.py -t https://stardust-studios-recording-studio.business.site/ -r testreport.html'
         }
       }
     } 
