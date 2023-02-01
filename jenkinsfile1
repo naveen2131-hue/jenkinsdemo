@@ -21,7 +21,8 @@ pipeline {
             hostPath:
               path: /var/run/docker.sock
           - name: zapreport
-            emptyDir: {}
+            persistentVolumeClaim: 
+              claimName: zap-pv-claim
        '''
     }
   }
