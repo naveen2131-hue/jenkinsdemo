@@ -25,7 +25,7 @@ pipeline {
     stage('owasp baseline zap') {
       steps {
         container('docker') { 
-          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable touch /zap/wrk/test.txt
+          sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable touch /zap/wrk/test.txt'
         }
       }
     } 
