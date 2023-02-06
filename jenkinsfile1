@@ -31,7 +31,7 @@ pipeline {
       steps {
         container('docker') { 
           sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py \
-                   -t https://stardust-studios-recording-studio.business.site/ -g gen.conf -r testreport.html'
+                   -t https://stardust-studios-recording-studio.business.site/ -g gen.conf -I -r testreport.html'
         }
       }
     } 
