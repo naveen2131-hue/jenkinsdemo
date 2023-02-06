@@ -29,6 +29,7 @@ pipeline {
 
   stages {
     stage('owasp zap api scan') {
+      steps {
         container('docker') { 
           sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-api-scan.py \
                    -t https://api.postman.com/collections/15608079-e87a9695-8388-4fc7-ad4f-96b2839f970a?access_key=PMAT-01GRBEBK91FYES1008ACVXCK8S -g gen.conf -I -r testreport.html'
@@ -36,3 +37,4 @@ pipeline {
       }
     } 
   }
+}
