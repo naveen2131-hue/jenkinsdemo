@@ -6,6 +6,11 @@ pipeline {
         kind: Pod
         spec:
           containers:
+          - name: maven
+            image: maven:alpine
+            command:
+            - cat
+            tty: true
           - name: docker
             image: docker:latest
             command:
@@ -14,18 +19,14 @@ pipeline {
             volumeMounts:
              - mountPath: /var/run/docker.sock
                name: docker-sock
-             - mountPath: /zap/wrk
-               name: zap
           volumes:
           - name: docker-sock
             hostPath:
-              path: /var/run/docker.sock
-          - name: zap
-            hostpath:
-              path: /zap/wrk
+              path: /var/run/docker.sock    
        '''
     }
   }
+
   stages {
     stage('owasp zap api scan') {
       steps {
