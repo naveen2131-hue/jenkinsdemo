@@ -27,7 +27,7 @@ pipeline {
     }
   }
   stages {
-    stage('owasp baseline zap') {
+    stage('owasp zap api scan') {
       steps {
         container('docker') { 
           sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-api-scan.py \
